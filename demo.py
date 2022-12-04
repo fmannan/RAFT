@@ -9,9 +9,9 @@ import numpy as np
 import torch
 from PIL import Image
 
-from raft import RAFT
-from utils import flow_viz
-from utils.utils import InputPadder
+from raft.raft import RAFT
+from raft.utils import flow_viz
+from raft.utils.utils import InputPadder
 
 
 
