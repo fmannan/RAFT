@@ -1,6 +1,7 @@
 import torch
 import torch.nn.functional as F
 from raft.utils.utils import bilinear_sampler, coords_grid
+import numpy as np
 
 try:
     import alt_cuda_corr
@@ -57,7 +58,7 @@ class CorrBlock:
         
         corr = torch.matmul(fmap1.transpose(1,2), fmap2)
         corr = corr.view(batch, ht, wd, 1, ht, wd)
-        return corr  / torch.sqrt(torch.tensor(dim).float())
+        return corr / np.sqrt(dim).astype(np.float)  # corr / torch.sqrt(torch.tensor(dim).float())
 
 
 class AlternateCorrBlock:

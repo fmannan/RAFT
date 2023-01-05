@@ -112,8 +112,8 @@ class BottleneckBlock(nn.Module):
 
         if self.downsample is not None:
             x = self.downsample(x)
-
-        return self.relu(x+y)
+        #print("HERE -- ", type(x), type(y), x.shape, y.shape)
+        return self.relu(x + y)
 
 class BasicEncoder(nn.Module):
     def __init__(self, output_dim=128, norm_fn='batch', dropout=0.0):

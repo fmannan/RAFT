@@ -12,7 +12,7 @@ from PIL import Image
 from raft.raft import RAFT
 from raft.utils import flow_viz
 from raft.utils.utils import InputPadder
-
+from time import time
 
 
 DEVICE = 'cuda'
@@ -52,15 +52,20 @@ def demo(args):
                  glob.glob(os.path.join(args.path, '*.jpg'))
         
         images = sorted(images)
+        time_per_frame = []
         for imfile1, imfile2 in zip(images[:-1], images[1:]):
             image1 = load_image(imfile1)
             image2 = load_image(imfile2)
 
+            print(image1.shape)
             padder = InputPadder(image1.shape)
             image1, image2 = padder.pad(image1, image2)
 
+            start_time = time()
             flow_low, flow_up = model(image1, image2, iters=20, test_mode=True)
+            time_per_frame.append(time() - start_time)
             viz(image1, flow_up)
+        print('time per frame: {}'.format(np.mean(time_per_frame)))
 
 
 if __name__ == '__main__':
